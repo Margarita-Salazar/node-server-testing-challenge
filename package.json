@@ -7,10 +7,7 @@
     "server": "nodemon index.js",
     "migrate": "knex migrate:up",
     "rollback": "knex migrate:rollback",
-    "test": "jest --watch"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "test": "cross-env DB_ENV=testing jest --watchAll --verbose --runInBand"
   },
   "repository": {
     "type": "git",
