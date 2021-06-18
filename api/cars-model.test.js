@@ -1,3 +1,4 @@
+const { text } = require("express");
 const db = require("../data/db-config.js");
 const Cars = require("./cars-model");
 
@@ -44,4 +45,33 @@ describe("cars-model", () => {
       });
     });
   });
+  describe("insert", () => {
+    test("returns created car", async () => {
+      const input = { name: "Silverado" }
+      const output = await Cars.insert(input)
+      expect(output).toMatchObject(input)
+    })
+  })
+  describe("delete", () => {
+    test("successfully delets item", async () => {
+      await Cars.remove(3)
+      const cars = await db('cars')
+      expect(cars).toMatchObject([
+        { name: "Sonic" },
+        { name: "Malibou" },
+      ])
+    })
+    text("data has the correct length", async () => {
+      await Cars.remove(3)
+      const cars = await db('cars')
+      expect(cars).toHaveLength(2)
+    })
+  })
+  describe('update', () => {
+    test('retuprn update car', async () => {
+      const input = { name: "New Sonic" }
+      const updated = await Cars.update(1, input)
+      expect(updated).toMatchObject(input)
+    })
+  })
 });
